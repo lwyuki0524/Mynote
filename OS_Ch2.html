@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/style2.css">
+	<title>OS_Ch2</title>
+</head>
+<body>
+	<script src="js/header.js" type="text/javascript" charset="utf-8"></script><!-- /header -->
+
+	<article>
+		<section>
+				<div class="note_title">
+					第二章
+				</div>
+
+				<div class="note">
+					<span style="font-size:larger;">🖋作業系統的種類</span><br>
+
+					<ul>
+						<li>包括批次處理、多重程式、分時系統、週邊線上同時工作、即時系統、多處理器系統、分散式系統</li>
+					</ul>
+					
+					<b>一、批次處理(Batch Processing)</b>
+
+					<ul style="line-height: 1.6;">
+						<li>把要執行的工作收集一段時間後，再一起透過電腦去執行</li>
+						<li>
+							使用Job Control Language(JCL)來事先說明要做哪些事情
+						</li>
+						<li>缺點:
+							<ol type="1">
+								<li>缺乏使用者與程式的交談</li>
+								<li>在時效上不經濟</li>
+								<li>當某程式在做I/O，CPU會被閒置，因此往返時間(Turnaround Time)較長</li>
+							</ol>
+							<div class="comment">
+								>往返時間 : 從開始委託電腦工作到整個工作完成所需的時間。(包含CPU處理時間、I/O時間、等待OS的時間...)
+							</div>
+						</li>
+						<li>現在還是有再用Batch Processing，像是電腦的「開機程式」等等...
+							<div class="comment">
+								>Batch Processing : 將程式、資料事先存到Disk內，且為了不讓CPU閒置，還會加上多重程式功能
+							</div>
+						</li>
+						<li>批次處理能計算期末成績</li>
+						<li>*.bat檔是一種批次處理的檔案</li>
+						<div class="comment">
+							>離線 : 設備不與電腦連接，不受CPU控制
+							>連線 : 設備與電腦連接，受CPU控制
+						</div>
+					</ul>
+
+					<br><br>
+
+					<b>二、多重程式(Multiprogramming)</b>
+
+					<ul style="line-height: 1.6;">
+						<li>同時有多個程式在主記憶體，輪流快速地由CPU執行，當程式正在進行I/O或等待資料時，CPU可至主記憶體內取另一個程式執行</li>
+						<li>多重程式能讓CPU使用率(Utilization)增加，使電腦產量(Throughput)增加</li>
+						<div class="comment">
+							>產量 : 單位時間的工作量、每單位時間完成的程式量
+						</div>
+						<li>現在的批次處理架構在多重程式上，才不會浪費CPU</li>
+					</ul>
+
+					<br><br>
+
+
+					<b>三、分時系統(Time Sharing Systems)</b>
+
+					<ul style="line-height: 1.6;">
+						<li>OS依中央處理器排程(CPU Scheduling)，將CPU的時間切割成極小的時間片段(Time Slice)/時間量(Time Quantum)
+							<ul>
+								<li>當程式還未執行完，時間片段用完了，則換另一程式佔有CPU</li>
+								<li>當程式要執行I/O或等待事件，時間片段尚未用完，程式會到懸置佇列(Blocked Queue)排隊，然後CPU Schedulimg會到等待佇列(Waiting Queue)取下一個程式執行並 <span style="color: red;">「重新劃分時間片段」</span></li>
+								<li>當懸置佇列的程式完成I/O或等待的事件發生，程式會到等待佇列最後面排隊</li>
+							</ul>
+						</li>
+						<span style="color: red;">*分時系統一定是多重程式，多重程式不一定提供分時系統(有可能是批次處理)</span>
+					</ul>
+
+					<br><br>
+
+					<b>四、週邊設備線上同時工作(Spooling)</b>
+
+					<ul style="line-height: 1.6;">
+						<li>當程式在使用專屬設備(Dedicated Device)時，在還沒用完之前，別的程式不能使用這個設備。Ex:印表機</li>	
+						<li>如果是在分時系統跟多重程式的環境下，若多個程式同時使用專屬設備如印表機，如果沒有特別處理，可能會造成<span style="color: red;">「你印一行，我印一行」</span>的問題發生</li>
+						<li>週邊設備線上同時工作(Spooling)用來解決共用專屬設備的機制。它使得專屬設備<span style="color: red;">被模擬成分享設備</span>，而且不會有「你印一行，我印一行」的問題發生
+							<ul>
+								<li>當有程式要使用印表機，OS內的週邊設備線上同時工作軟體(Spooler)會將所有輸出<span style="color: red;">暫存到硬碟裡</span>，然後Spooler根據印表機使用狀況，依序將硬碟中的輸出丟到印表機列印。</li>
+								<li>Spooler把硬碟當成很大的Buffer，它會先判斷印表機的使用狀況，再決定要把輸出直接送到印表機裡或是暫存到硬碟等待輸出</li>
+							</ul>
+						</li>
+						<li>優點: Spooling 可以使一程式的I/O和另一程式的計算同時進行(程式在執行I/O會丟給Spooler處理，把CPU讓給下個程式使用)，<span style="color: red;">增加CPU跟I/O使用率</span></li>
+						
+					</ul>
+
+					<br><br>
+
+					<b>五、即時系統(Real Time System)</b>
+
+					<ul style="line-height: 1.6;">
+						<div class="comment">
+							>反應時間 : 提出要求到電腦回應的時間
+						</div>
+						<li>如果有事情發生，能立即針對問題反應，並在規範的時間內執行、處理且得到正確結果</li>
+						<li>在即時系統中，反應時間很重要
+							<ul>
+								<li>硬性即時(Hard Real Time):在限定的時間內，即時反應並完成所有處理工作</li>
+								<li>軟性即時(Soft Real Time):在限制的時效裡反應，且電腦出面處理了(不管處理多久)，應變程式持續佔有CPU進行善後</li>
+							</ul>
+						</li>
+						<span style="color: red;">*即時系統一定是連線的(On Line)，連線系統不一定即時</span>
+						<li>現在的電腦系統不太強調即時系統，因為現在基本上都提供「優先等級(Priority)」，當事件發生，CPU會先處理優先等級高的程式</li>
+					</ul>
+
+					<br><br>
+
+					<b>六、多處理器系統(Multiprocessor System)</b>
+
+					<ul style="line-height: 1.6;">
+						*也稱多重處理(Multiprocessing)、平行系統(Parallel System)
+						<li>一部電腦有許多 CPU ，它們同時執行程式，共用電腦資源(Ex:匯流排、時脈、記憶體、週邊設備...)</li>
+						<li>是一種緊密性系統(Tightly Coupled System)</li>
+						<li>使產量(Throughput)和可靠度(Reliability)增加</li>
+						<div class="comment">
+							>*軟性失誤(Fail Soft):多處理器系統中，壞掉一顆CPU不會讓電腦停止工作，只會讓效能降低，因此也稱為「優雅的衰減(Graceful Degraduation)」
+						</div>
+						<li>執行程式可以有兩種方式:
+							<ol>
+								<li>每個程式給一個CPU，若程式跟程式要交換訊息，再由OS執行同步</li>
+								<li>一個程式可同時分配多個CPU</li>
+							</ol>
+						</li>
+					</ul>
+
+					<br><br>
+
+				</div>
+		</section>
+		<div class="L_R_button">
+			<a href="OS_Ch1.html" title="上一頁"  class="l_r_button"><button>上一頁</button></a>
+			<a href="OS.html" title="回到目錄"  class="l_r_button"><button>回到目錄</button></a>
+			<!--<a href="" title="下一頁"  class="l_r_button"><button>下一頁</button></a>-->
+		</div>
+		<section>
+			<div class="note_title hw_title" style="font-size: x-large;margin-top: 10%;">
+				作業/討論
+			</div>
+
+			<div class="hw_review">
+
+				<b>1.解釋下列名詞</b>
+				<ol type="a">
+					<li>Bare Machine <br>
+						<span style="color: blue;">裸機是指只有硬體而未加裝軟體跟硬體的電腦，須加上作業系統才能工作。</span>
+					</li>
+					<li>System Call <br>
+						<span style="color: blue;">系統呼叫是程序員撰寫的程式與作業系統的介面，一般使用者執行程式要用到系統資源時，須透過系統呼叫請作業系統決定並分配使用資源，這樣可以保護系統資源不因為錯誤的操作而使系統當掉。</span>
+					</li>
+					<li>Multiprogramming <br>
+						<span style="color: blue;">多重程式是把多個程式放在主記憶體裡，輪流由CPU執行，當執行的程式需要等待輸入/輸出等資源時，CPU可直接取得下個程式來執行。</span>
+					</li>
+					<li>Time Sharing <br>
+						<span style="color: blue;">分時系統是為了避免在多重程式的情況下，有些程式執行太久，其他程式執行不到，因此讓作業系統依CPU排程將CPU的時間切割成時間片段，這樣每執行到一個時間片段後，CPU便會中斷並執行下一個程式，讓沒執行完的排最後繼續等待執行。</span>
+					</li>
+					<li>Spooling <br>
+						<span style="color: blue;">週邊設備線上同時工作是將某些專屬設備模擬成分享設備，作業系統內的Spooler會將輸出暫存到硬碟中，當上一個行程執行完畢，依序由磁碟輸出至專屬設備。</span>
+					</li>
+					<li>Hard Real Time <br>
+						<span style="color: blue;">硬性即時是必須在限制的時間內，即時反應並完成所有處理工作。</span>
+					</li>
+				</ol>
+				
+
+				<b>2.試比較下列的不同</b> 
+					<ol type="a">
+					<li>System Call and DOS Call <br>
+						<span style="color: blue;">系統呼叫是程式與作業系統的介面，作業系統必須保護系統資源，因此要使用系統資源之程式必須透過系統呼叫，由作業系統決定並安排使用資源。
+				而在MS / DOS之分層結構中，應用程式可以直接呼叫基本輸出 / 輸入函數，而不用透過作業系統之系統呼叫後，再經由作業系統核心出面安排處理工作。</span>
+					</li>
+					<li>Time Sharing and Multiprogramming<br>
+						<span style="color: blue;">一個分時系統一定是多重程式，但多重程式不一定是分時系統。</span>
+					</li>
+					<li>Response Time and Turnaround Time <br>
+						<span style="color: blue;">多重程式是把多個程式放在主記憶體裡，輪流由CPU執行，當執行的程式需要等待輸入/輸出等資源時，CPU可直接取得下個程式來執行。</span>
+					</li>
+					<li>Time Sharing <br>
+						<span style="color: blue;">反應時間是提出要求到電腦回應的時間；而往返時間是從開始委託電腦工作到整個工作完成所需的時間。
+				一個是從提出到回應的時間，一個是從提出到所有工作完成的時間。</span>
+					</li>
+					<li>NOS and DOS <br>
+						<span style="color: blue;">NOS是網路作業系統，它是指可以讓「不同」的作業系統利用網路連接後，可以使用遠端登入或檔案傳輸方式共享資源。
+				DOS是分散式作業系統，它是用「相同」的作業系統利用網路連接後，任何遠端的資源能被作業系統是為本身的資源，因此可以直接存取。</span>
+					</li>
+				</ol>
+
+			</div>
+			<br><br><br>
+		</section>
+
+	</article>
+	<script src="js/footer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+	<script src="js/top.js" type="text/javascript" charset="utf-8"></script>
+	
+</body>
+</html>

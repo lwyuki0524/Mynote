@@ -1,0 +1,174 @@
+*{
+	box-sizing: border-box;
+}
+html,body{
+	font-family: sans-serif;
+	height: 100%;
+	margin: 0px;
+}
+#header{
+	background-color: #ffcec3;
+    color: #6e5642;
+    font-size: 14px;
+    height: 350px;
+    border-bottom: solid 1.5px #b4afafb3;
+    box-shadow:-2px -2px 14px #908a8a;
+}
+nav{
+    overflow: hidden;
+	/*padding: 10px;*/
+    background-color: #3934349c;/*#bc9f99a6;*/
+    box-shadow: -2px -2px 7px 3px #787878d6;
+}
+nav .menu{
+	margin-left: 10%;
+}
+/*
+.rside{
+	position: relative;
+    bottom: 10px;
+    float: right;
+    right: 65%;
+}
+*/
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+.dropdown-content {
+  display: none;
+  background-color: #f9f9f9;
+  position: absolute;
+  top: 40px;
+  height: fit-content;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown .dropbtn {
+  border: none;
+  background-color: inherit;
+  font-family: inherit; 
+  margin: 0; 
+}
+
+.menu .dropdown .dropdown-content a {
+  color: #d55555;
+  font-weight: 400;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.menu .dropdown .dropdown-content a:hover {
+  background-color: #ddd;
+  color: #d5558d;
+  font-weight: 600;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+nav .menu a{
+    float: left;
+    padding: 10px;
+    text-decoration: unset;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffe1b4;/*#6e5642;*/
+    letter-spacing: 5px;
+    border-radius: 5px;
+}
+nav .menu a:hover{
+	color: #d95e5e;
+    background-color: #fcffebe0;
+}
+header .title{
+	margin: auto;
+    width: fit-content;
+    margin-top: 100px;
+    font-size: 35px;
+}
+article{
+	margin:40px 10%;
+}
+section .title{
+	width: fit-content;
+    margin: 20px auto;
+    font-size: 22px;
+    padding: 20px;
+    letter-spacing: 20px;
+}
+.semester_block{
+    margin: 20px 20px 60px;
+}
+.semester{/*
+	border-left: 10px solid #ff60a7;
+    background-color: #fce1ed;
+    border-radius: 2px 5px 5px 2px;*/
+    font-size: 20px;
+    padding: 10px 10%;
+    text-align: center;
+    width: fit-content; 
+    margin: auto;
+    border-left: 10px solid #ff6b6b99;
+    border-right: 10px solid #ff6b6b99;
+    background-color: #fce1e1;
+    border-radius: 5px;
+}
+.course{
+	margin: 0px 10px;
+    display: flex;
+    height: fit-content;
+    padding: 20px 30px;
+}
+.course .cardtext{
+	position: absolute;
+    padding: 20px;
+    left: 0;
+    color: white;/*#f8f8ae;*/
+    font-size: 28px;
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+    height: 40%;
+    background-color: black;
+    opacity: 0.8;
+    transition: .5s ease;
+}
+.cardtext span{
+	position: relative;
+	top: 50%;
+	padding: 10px;
+	text-align: center;
+	transform: translate(-50%, -50%);
+}
+.course li{
+	position: relative;
+    height: 200px;
+    width: 100%;
+    list-style: none;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 5px;
+}
+.course li:hover .cardtext{
+	height: 100%;
+}
+
+.back-to-top {
+    display: none; /* 默認是隱藏的，這樣在第一屏才不顯示 */
+    position: fixed; /* 位置是固定的 */
+    bottom: 20px; /* 顯示在頁面底部 */
+    right: 30px; /* 顯示在頁面的右邊 */
+    z-index: 99; /* 確保不被其他功能覆蓋 */
+    background-color: #fdffe6; /* 設置背景背景顏色 */
+    cursor: pointer; /* 滑鼠移到按鈕上顯示手型 */
+    /*padding: 10px 15px 15px 15px; /* 增加一些內邊距 */
+    border-radius: 50px; /* 增加圓角 */
+}
+footer{
+	width: 100%;
+	background-color: black;
+}

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/style2.css">
+	<title>OS_Ch1</title>
+</head>
+<body>
+	<script src="js/header.js" type="text/javascript" charset="utf-8"></script><!-- /header -->
+
+	<article>
+		<section>
+				<div class="note_title">
+					第一章
+				</div>
+
+				<div class="note">
+					<span style="font-size:larger;">🖋作業系統(Operation System)</span>
+					
+					<ul>
+						<li>是電腦的核心，由驅動電腦硬體工作的軟體及硬體組成</li>
+						<li>是使用者與電腦的操作介面，可以管理電腦資源</li>
+						<li>
+							由四大管理驅動裸機工作:
+							<ol>
+								<li>記憶體管理</li>
+								<li>處理元/處理器管理</li>
+								<li>設備管理</li>
+								<li>資訊管理</li>
+							</ol>
+						</li>
+					</ul>
+					<div class="comment">
+						> 裸機 : 只有硬體而沒有軟體及韌體的電腦。裸機無法工作，須加上作業系統才能工作。 <br>
+						> 韌體 : 燒入在硬體的軟體。 Ex: BIOS是一種韌體。
+					</div>
+					<br><br>
+						
+					<b>一、啟動載入器(Bootstrap Loader)</b>
+
+					<ul>
+						<li>將作業系統載入主記憶體的韌體</li><br>
+						<li>
+							當電源打開，Program counter 會指向主記憶體中存放啟動載入器的位址，啟動載入器會到硬碟將
+		 					OS Kernel 載到主記憶體，然後 Program counter 再指向 OS Kernel ，將控制權交給作業系統，
+ 							作業系統核心會再去硬碟裡載入命令直譯器(Command Interpreter)，將控制權交給命令直譯器等待接收命令。
+ 							<br>
+ 							<span style="color: red;">命令直議器是作業系統核心(OS Kernel)的一員，扮演接收使用者命令的角色。</span>
+						</li><br>
+						<li>啟動載入器(Bootstrap Loader)需要事先燒入到主記憶體內，它屬於韌體。</li>
+					</ul>
+
+					<br><br>
+
+					<b>二、命令直譯器(Command Interpreter)</b>
+
+					<ul>
+						<li>是使用者與OS最前端的使用者介面</li>
+						<li>透過面盤輸入命令，Command Interpreter 接收命令並進行解譯後去執行相對命令。</li>
+						<li>Command Interpreter 將程式 complier 時，會先抓 program ，再分析其文法有無錯誤再做處理。</li>
+						<li>命令分為 <span style="color: red;">內部命令</span>與<span style="color: red;">外部命令</span></li>
+					</ul>
+
+					<div class="comment">
+						> 內部命令 : 是隨著 Shell 一起在開機時載入主記憶體之OS區域。 <br>
+						> 外部命令 : 放在硬碟等輔助記憶體內，有用到才載入 Main Memory。
+					</div>
+					<br><br>
+
+
+					<b>三、帳號管理(Accounting)</b>
+
+					<ul>
+						<li>保護電腦不被非法使御用者侵入</li>
+						<li>確認身分、使用資源的權限(電腦可多人使用、登入，要確保每人的資源不被破壞)</li>
+					</ul>
+					<br><br>
+
+					
+					<b>四、程式執行(Program Execution)</b>
+
+					<br>
+					<ul>
+						<li>兩種手法:
+							<ol type="1">
+								<li>使用者下命令由Shell執行</li>
+								<li>事先在電腦內部設定「中斷」發生時執行</li>
+							</ol>
+						</li>
+					</ul>
+
+					<table border="1px" style="margin-left: 10%;">
+						<caption><b>中斷</b></caption>
+						<tr>
+							<td rowspan="5">中斷</td>
+							<td rowspan="3">執行的過程有誤</td>
+							<td>計算溢位(Overflow)</td>
+						</tr>
+						<tr>
+							<td>硬體損壞</td>
+						</tr>
+						<tr>
+							<td>通訊錯誤</td>
+						</tr>
+						<tr>
+							<td rowspan="2">非經授權的動作</td>
+							<td>使用處理器太久</td>
+						</tr>
+						<tr>
+							<td>不合法存取記憶體</td>
+						</tr>
+						
+					</table>
+					<br><br>
+
+					<b>五、系統呼叫(System Call)</b>
+
+					<ul>
+						<li>是程式設計者所撰寫之「程式與作業系統的介面」</li>
+						<li>任何使用系統資源的程式需透過系統呼叫，由OS決定、安排使用資源</li>
+						<li>輸出敘述會被編譯成呼叫系統函數，而系統函數本身會被轉譯成系統呼叫 <br>
+							<div style="border: 1.5px solid #66124edb;;padding: 1px 5px;
+									    margin: 15px auto;width: fit-content;text-align: center;">
+								Printf out --> System Library/Function Code --> System Call
+							</div>
+						</li>
+						<li>System Call 與 MS/DOS 的 DOS Call 及 BIOS CALL 不同
+							<ul>
+								<li>System Call有嚴密的系統保護，DOS Call 與 BIOS Call 無</li>
+							</ul>
+						</li>
+
+					</ul>
+					<br><br>
+
+					<b>六、系統保護(System Protection)</b>
+
+					<ul>
+						<li>防止非經授權的使用者動用系統資源，也確保不會讓不正確的程式搞破壞</li><br>
+						<ol style="line-height: 1.5;">
+							
+							<li><b>雙模保護(Dual Mode Protection)</b><br>
+								<div class="comment">
+									> 使用者模式 : 一般使用者登入後就進到User Mode，只能做自己工作環境下的事情<br>
+									>監督者模式 : 超級使用者(Super User)可以Login後轉換為監督者模式，可以動用系統的任何資源
+								</div>
+								<ul>
+									<li>一般的User在 run program 是在「使用者模式」下，如果有動用到系統資源，就會做System Call，讓系統呼叫藉由監督者模式代為處理</li>
+									<li>作業系統通常在監督者模式下執行</li>
+								</ul>
+							</li>
+							<div class="comment">
+								> 特權指令(Privileged) : 在監督者模式內所使用的命令。Ex:暫停系統、打開/關閉中斷、轉換模式、輸出/輸入指令<br>
+							</div>	
+							<div style="color: red;">*如果只是讀取時間的指令不是特權指令，會動用到系統內部的指令才是特權指令(ex:關機、暫停系統...)</div>
+							<br>
+							<li><b>輸入/輸出保護(I/O Protection)</b>
+								<ul>
+									<li>程式如果要做I/O，就必須透過「系統呼叫」請OS進到監督者模式下，執行完畢後再通知你做完了</li>
+								</ul>
+							</li>
+							<br>
+							<li><b>記憶體保護(Memory Protectio)</b>
+								<ul>
+									<li>載入器將執行模組載入記憶體定位後，程式的地址空間即確定</li>
+									<li>若要存取非地址空間的位置，需透過系統呼叫建立連線，否則視為不合法的存取記憶體</li>
+								</ul>
+							</li>
+							<div class="comment">
+								>地址空間 : 一個程式所能合法使用的記憶體空間<br>
+							</div>
+							<br>
+							<li><b>中央處理器保護(CPU Protection)</b>
+								<ul>
+									<li>我們無法確定任何一個程式是否永不停止</li>
+									<li>為了保護CPU，在OS中設定計時器，當「時間逾時」，則會產生中斷，以停止程式繼續執行</li>
+								</ul>
+							</li>
+							<div class="comment">
+								>環境切換 : user1 時間片段用完，換user2佔有CPU<br>
+							</div>
+							<br>
+							<li><b>檔案保護(File Protection)</b>
+								<ul>
+									<li>電腦登錄後只能存取自己目錄內的檔案，其他使用者要經授權才可使用別人的檔案</li>
+								</ul>
+							</li>
+						</ol>
+
+					</ul>
+					<br><br>
+					
+				</div>
+		</section>
+		<div class="L_R_button">
+			<a href="OS.html" title="回到目錄"  class="l_r_button"><button>回到目錄</button></a>
+			<a href="OS_Ch2.html" title="下一頁"  class="l_r_button"><button>下一頁</button></a>
+		</div>
+		<section>
+			<div class="note_title hw_title" style="font-size: x-large;margin-top: 10%;">
+				作業/討論
+			</div>
+
+			<div class="hw_review">
+				<ol type="1">
+					<li>作業系統能夠判定任何一個程式永不停止嗎？為什麼？<br>
+						<span style="color: blue;">不行。這是離散裡的「停止問題」。我們只能知道此時程式的狀態，無法得知其是否會永不停止。</span>
+					</li>
+					<li>作業系統能夠診測任何一個程式是否在無窮迴圈嗎？為什麼？<br>
+						<span style="color: blue;">不行。因為程式在執行時，作業系統無法得知程式內容，像是離開迴圈的條件，因此無法判斷是否是無窮迴圈。</span>
+					</li>
+					<li>作業系統應該如何防止一個程式進入無窮迴圈？<br>
+						<span style="color: blue;">可以讓每個程式設置計時器，當時間逾時，就產生中斷以停止程式繼續執行。</span>
+					</li>
+				</ol>
+				
+			</div>
+		</section>
+			<br><br>
+
+	</article>
+	<script src="js/footer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+	<script src="js/top.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

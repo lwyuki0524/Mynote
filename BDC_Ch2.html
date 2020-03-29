@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/style2.css">
+	<title>BDC_Ch2</title>
+</head>
+<body>
+	<script src="js/header.js" type="text/javascript" charset="utf-8"></script><!-- /header -->
+
+	<article>
+		<section>
+				<div class="note_title">
+					企業資料通訊 作業2
+				</div>
+
+				<div class="note">
+					<div style="font-size:larger;text-align: center;">第二次作業-3/31</div><br>
+					<ol>
+						<li>
+							探討傳播延遲和傳輸延遲這兩個資料網路的核心概念。請考量兩台主機A 和B，透過一條速率為R bps 的單一連結相連。假設兩台主機相距m 公尺，連結的傳播速率為s 公尺／秒。主機A 欲傳送一個大小為L 位元的封包給主機B。<br>
+							a. 請用m 和s 來表示傳播延遲dprop。 <br>
+							b. 請用L 和R 來判斷封包的傳輸時間dtrans。 <br>
+							c. 請忽略處理和佇列延遲，試求端點到端點延遲的運算式。 <br>
+							d. 假設s = 2.5×108、L = 120 位元、R = 56 kbps。試求會令dprop 等於dtrans 的距離m。 <br>
+							答案： <br>
+							<ol type="a">
+								<li> <span style="color: blue;text-indent: 3px;">d<sub>prop</sub> = m/s</span></li>
+								<li> <span style="color: blue;text-indent: 3px;">d<sub>trans</sub> = L/R</span></li>
+								<li> <span style="color: blue;text-indent: 3px;">端點到端點延遲=d<sub>prop</sub>+ d<sub>trans</sub> = m/s + L/R</span></li>
+								<li> 
+									<span style="color: blue;text-indent: 3px;">d<sub>prop</sub> = d<sub>trans</sub><br>
+									m/(2.5×10<sup>8</sup>)=120/(56*1024) <br>
+									m =(2.5×10<sup>8</sup>)*120/(56*1024) <br>
+									=(3×10<sup>10</sup>)/57344 <br>
+									≒523158
+									</span>
+								</li>
+							</ol>
+
+						</li>
+
+						<br>
+
+						<li>
+							請列出傳輸協定能夠提供的四大類服務。針對每一類服務，請指出UDP 或TCP 是否有提供這項服務。 <br>
+							答案：<br>
+							<ul>
+								<li> <span style="color: blue;text-indent: 3px;">可靠的資料傳輸:TCP有、UDP無</span></li>
+								<li> <span style="color: blue;text-indent: 3px;">產出率:兩者都無</span></li>
+								<li> <span style="color: blue;text-indent: 3px;">時程:兩者都無</span></li>
+								<li> <span style="color: blue;text-indent: 3px;">安全性:兩者都無</span></li>
+							</ul>
+						</li>
+
+						<br>
+
+						<li>
+							請考量某個想要保存所有顧客購物記錄的電子商務網站。試描述要如何使用cookie 來達成此一目的。 <br>答案：<br>
+							<span style="color: blue;text-indent: 3px;">
+								首先，當使用者第一次到這個商務網站時，伺服器收到請求後，會給使用者建立一個識別碼，然後存在後端的資料庫裡。再來，伺服器傳送回應訊息時，會加上Set-cookie:剛剛建立的識別碼。 <br><br>
+								然後用戶端的瀏覽器會在cookie中記錄下伺服器端主機名稱跟識別碼。 <br><br>
+								這樣那家電子商務網站就會記下使用者來過的紀錄了。 <br><br>
+								當下次要再來這個網站時，這個電子商務網站會知道你曾經來過並提供使用者會比較感興趣的內容。
+							</span>
+						</li>
+
+						<br>
+
+						<li>
+							假設你想要從遠端的用戶端 (Client)，盡可能用最快的速度傳資料給伺服器 (Server)。你會使用UDP還是TCP？請詳細描述其原因？ <br>答案： <br>
+							<span style="color: blue;text-indent: 3px;">
+								我會使用UDP，因為UDP是極簡的輕量型傳輸協定、不做壅塞控制機制，而且不需要像TCP一樣建立連線，所以傳輸的速度很快。
+							</span>
+						</li>
+
+						<br>
+
+						<li>
+							雖然快取(Cache) 可以減少使用者所感受到的回應時間，但是它也引發了一個新的問題： 快取中的物件副本可能是過時的。換句話說，網頁伺服器 (Web Server) 所存放的物件，可能在用戶快取副本之後被修改過。請問HTTP如何處理這個問題？ <br>答案：<br>
+							<span style="color: blue;text-indent: 3px;">
+								HTTP會使用一種機制叫「有條件的GET」。代理快取會向網頁伺服器發出請求，網頁伺服器會把回應訊息包括所請求的物件傳回給快取。快取伺服器會再把物件轉傳給發出請求的瀏覽器，同時存在本機的快取中，快取也同時會儲存最後的修改日期。 <br><br>
+								當瀏覽器想要連結這個網頁，在代理快取發出有條件的GET時，會檢查是否有更動最後日期，發現最後日期有更新過，網頁瀏覽器便會傳送所請求的物件。若沒有更新日期，網頁伺服器會回應訊息給快取但不包括所請求的物件，讓快取知道可以傳送副本給瀏覽器。
+
+							</span>
+						</li>
+
+					</ol><br>
+					
+					<br><br>
+					
+				</div>
+		</section>
+		<div class="L_R_button">
+			<a href="BDC_Ch1.html" title="上一頁"  class="l_r_button"><button>上一頁</button></a>
+			<a href="BDC.html" title="回到目錄"  class="l_r_button"><button>回到目錄</button></a>
+			<a href="BDC_Ch3.html" title="下一頁"  class="l_r_button"><button>下一頁</button></a>
+		</div>
+		
+			<br><br>
+
+	</article>
+	<script src="js/footer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+	<script src="js/top.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>
